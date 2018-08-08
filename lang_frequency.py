@@ -1,7 +1,6 @@
 from collections import Counter
 import sys
 import re
-#python lang_frequency.py text.txt
 
 
 def load_data(filepath):
