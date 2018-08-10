@@ -4,21 +4,30 @@ import re
 
 
 def load_data(filepath):
-    with open(filepath, 'r') as file:
+    with open(filepath) as file:
         try:
-            raw_data = file.read()
-            return raw_data
+            text_string = file.read()
+            return text_string
         except UnicodeDecodeError:
             return None
 
 
 def get_most_frequent_words(text):
     count_to_output = 10
-    document = re.findall(r'\w+', text)
-    return Counter(document).most_common(count_to_output)
+    list_words = re.findall(r'\w+', text.lower())
+    return Counter(list_words).most_common(count_to_output)
 
 
 if __name__ == '__main__':
-    filepath = sys.argv[1]
-    for word, count in get_most_frequent_words(load_data(filepath)):
-        print("{} {}".format(word, count))
+    try:
+        filepath = sys.argv[1]
+        txt = load_data(filepath)
+        if not txt:
+            exit('Файл поврежден или имеет неизвестную кодировку')
+        most_frequent_words = get_most_frequent_words(txt)
+        for word, count in most_frequent_words:
+            print('{} {}'.format(word, count))
+    except FileNotFoundError:
+        exit('Файл не найден')
+    except IndexError:
+        exit('Не указан путь до файла')
