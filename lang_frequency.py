@@ -22,8 +22,6 @@ if __name__ == '__main__':
     try:
         filepath = sys.argv[1]
         txt = load_data(filepath)
-        if not txt:
-            exit('Файл поврежден или имеет неизвестную кодировку')
         most_frequent_words = get_most_frequent_words(txt)
         for word, count in most_frequent_words:
             print('{} {}'.format(word, count))
